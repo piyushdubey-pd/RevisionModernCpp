@@ -1,0 +1,34 @@
+//sportsF1 has both
+//sportsCar features
+//car features
+
+//car has only
+//car features
+
+// when we try to copy sportsF1 to maruti, then only maruti features present in sportsCar class is copied, not sportsF1., hence infomation is sliced off
+
+// TO AVOID THIS ---> pass parameters by reference to base class
+
+#include <iostream>
+using namespace std;
+
+class car
+{
+public:
+  int gear;
+};
+
+class sportsCar: public car
+{
+public:
+    int sportsGear;
+};
+
+int main()
+{
+  sportsCar sportsF1;
+  car maruti = sportsF1; //This will cause problem of slicing
+}
+
+
+

@@ -1,0 +1,30 @@
+#include <iostream>
+using namespace std;
+
+//access specifier if protected, then members of A to class B is are also protected (The public memebers will also be protected, but private of class A cannot be accessed by B also)
+//Meaning only inherited class can access it, objects created of type B cannot access it
+
+// even setData is protected member of class A, 
+
+class A {
+
+    int a;
+
+    protected:
+    void setData(int k)
+    {a=k; cout<<"val is: "<<a<<endl;}
+};
+
+class B: protected A{
+
+    int b;
+    
+    public:
+    void setValue(int val)
+    {setData(val);}
+};
+
+int main(){
+    B obj1;
+    obj1.setValue(3);
+}

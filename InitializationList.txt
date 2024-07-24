@@ -1,0 +1,20 @@
+#include <iostream>
+using namespace std;
+
+class Humans{
+    private:
+    int age;
+    string name;
+    
+    public:
+    Humans(string humanName, int humanAge): name(humanName), age(humanAge)
+    {
+        cout<< name <<" & " << age<< endl;
+    }
+    
+};
+
+int main()
+{
+    Humans("Apeksha", 23);
+}

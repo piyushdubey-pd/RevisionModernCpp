@@ -1,0 +1,62 @@
+// USE DEEP COPY WHEN WE HAVE POINTERS IN THE CLASS CODE
+
+#include <iostream>
+using namespace std;
+
+class Dummy{
+  int a, b;
+  int *p;
+  public:
+  Dummy()
+  { //need to assign this dynamically bcoz if in setData I do p=&z then
+  // address of z after setData is executed is no more valid. Hence create memory
+  //dynamically
+      p = new int;
+  }
+   ~Dummy()
+  {
+      delete p;
+  }
+  void setData(int x, int y, int z){
+      a = x;
+      b = y;
+      *p = z;
+  } 
+  void getData()
+  {
+     cout << "a:"<<a<< " b:"<< b << " p:"<< *p<< endl;
+  }
+  void changedata(int x, int y, int z)
+  {
+      a = x;
+      b = y;
+      *p = z;
+      cout<< "-----Data changed------"<<endl;
+  }
+  Dummy (Dummy &d) // Deep copy
+{
+  a=d.a;
+  b=d.b;
+  p = new int; // this will create a new block for p in d2
+  *p= *(d.p); // now assign the VALUE from d1 to d2
+}
+};
+
+
+int main()
+{
+    Dummy d1;
+    d1.setData(5,6,7);
+    d1.getData();
+    // when we create an object but did not assign anything, then default constructor is 
+    // called, and in the next line, when d2=d1, then constructor cannot be called bcoz
+    // constructor is called only while object creation.
+    // copy assignment operator is called, which is default when class is created, 
+    // but we can create one of we want
+    Dummy d2=d1; 
+    d2.getData();
+    
+    d1.changedata(3,4,10);
+    d1.getData();
+     d2.getData();
+}

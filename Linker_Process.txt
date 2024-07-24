@@ -1,0 +1,30 @@
+---------------------------- USER WROTE THIS CODE AND USING MY COMPANY'S CODE written in main.cpp-----------------------------------------
+// I want to use this moo() function from a company 'otherc++File'. I will get dll & a lib file from them which I will
+// need to compile and use it.
+
+void moo();
+
+void main()
+{
+    moo();
+}
+
+
+
+
+------------------------------------------- THIS IS MY COMPANY'S CODE written in an other file -----------------------------------------------
+
+// if I had a company and I wish that when I ship my product, others can use it, then I mention about dllexport
+// we write keyword 'dllexport' , so that when I make a library file or dll, I want this visibly callable outside
+// that library, meaning want others to use my product, hence when I ship a dll or lib file, any customer having
+// exe file can use "moo" function
+
+//Note: we dont ship .exe file to customers, we ship dll (dynamic link library) and a library file 
+
+
+#include <iostream>
+
+_declspec(dllexport) void moo() 
+{
+    std::cout<<"moo"<<std::endl;
+}

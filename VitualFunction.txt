@@ -1,0 +1,42 @@
+
+#include <iostream>
+using namespace std;
+
+class car
+{
+    public:
+    virtual void shiftGear()
+    {
+        cout<<"cAR ki shiftGear chali"<<endl;
+    }
+};
+
+class sportsCar:public car
+{
+    // add override keyword understand that this method is overridden. 
+    //If working with different class, and this keyword is added, it becomes easy for us to analysis this function, and if no such method exsist 
+    //then compiler will let us know that this method is not overridden
+    void shiftGear() override 
+    {
+        cout<<"sportscar wali shiftGear chali"<<endl;
+    }
+};
+
+int main()
+{
+    car* obj1;
+    sportsCar ford;
+    obj1 = &ford;
+    obj1->shiftGear();
+
+  // just showing the use of casting here
+
+    car obj1;
+    sportsCar* ford;
+    ford = static_cast<sportsCar*>(&obj1);
+    cout<<typeid(ford).name()<<endl;
+    ford->shiftGear();  // since type of ford is sportsCar and contents of it is car class, we have typed virtual keyword in 'car' class, hence late binding ke chalte car class ka shiftGear call hoga.
+                        // if virtual nahi hota then type of ford ko aadhar mana jata and child class ka shiftGear call hota
+}
+
+// without virtual and override keyword the output order is reversed

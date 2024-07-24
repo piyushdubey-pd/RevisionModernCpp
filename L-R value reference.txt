@@ -1,0 +1,46 @@
+------ Case 1----------
+
+#include <iostream>
+void SetValue(int& value)
+{
+    value += 1;
+    std::cout<< value<< std::endl;
+}
+
+int main() {
+    int i =10;
+  SetValue(i);
+  SetValue(10); ----> This is error, since an R-value reference cannot be assigned like this to L-value(int&) as 10 has no address or location
+}
+
+
+
+
+------ Case 2 ----------
+#include <iostream>
+void setValue(const int& value) ---> workaround for case 1
+{
+    std::cout<< value;
+}
+
+int main() {
+ int i=10;
+ setValue(i);
+ //int &a = 10; //---> assigning 10 to 'a'. 10 is not an address
+ const int &a = 10; //---> This is just a work around to assign R-value to L-value inspite 10 not having an address 
+ setValue(10);
+}
+
+
+--------- Case 3 ---------
+#include <iostream>
+int& GetValue()
+{
+    static int value = 10;  //----> Static is necessary for out of scope reason. If return type of function were not int&, an and just int then a copy of the      //return type would have been passed which has no scope issue since its a copy
+    return value;
+}
+
+int main() {
+  int i= GetValue();
+  GetValue() = 4;  -----> //We are able to do this is because return type of GetValue() is an L-value reference (int&-has address). And things can be assigned //to L-value reference
+}

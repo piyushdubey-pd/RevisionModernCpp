@@ -1,0 +1,67 @@
+// Friend function
+// Its not a member of the class, but Can access all the members of the class(Private/public) but not directly.
+// We need to just mention in the class that there is a friend function, not define it in the class as its not a member
+// To access it, call it like a normal function passing in the instance(to understand who is calling it)
+
+#include <iostream>
+using namespace std;
+
+class Complex{
+  
+  int a,b;
+  public:
+  void setData(int a, int b){
+      this->a = a;
+      this->b = b;
+  }
+  void display()
+  {cout<<a<<"+"<<b<<"i"<<endl;}
+  
+  friend int sumThem(Complex); // Friend function declared in private (so, it doesn't matter where it is declared because its not a member of class)
+};
+
+int sumThem(Complex c)  //Declaring friend function outside the class
+{ 
+    return (c.a+c.b);
+}
+
+int main()
+{
+    Complex c1;
+    c1.setData(3,4);
+    c1.display();
+    cout<<sumThem(c1)<<endl;  // calling friend function
+    
+}
+
+
+// Friend function can access private variables of multiple classes
+
+#include <iostream>
+using namespace std;
+class B;
+
+
+class A
+{
+  int a;
+  friend void sum(A, B);
+};
+
+class B
+{
+  int b;
+  friend void sum(A, B);
+};
+
+void sum(A o1, B o2)
+{
+    cout<<"sum is "<< o1.a+o2.b<<endl;
+}
+
+int main() {
+    A obj1; B obj2;
+    sum(obj1,obj2);
+	cout<<"GfG!";
+	return 0;
+}

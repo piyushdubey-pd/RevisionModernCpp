@@ -1,0 +1,76 @@
+#include <iostream>
+#include <string>
+
+// type& is l-value
+static std::string staticString {"Static String"};
+void display(std::string& s) {
+    std::cout << "Display with L-Value Reference: " << s << std::endl;
+}
+
+// type&& is r-value reference
+void display(std::string&& s) {
+    std::cout << "Display with R-Value Reference: " << s << std::endl;
+}
+
+// const type& takes both L-value and R-value references (called const-reference)
+void displayBothLRValue(const std::string& sUniversal) {
+    std::cout << "Display with BothLRValue: " << sUniversal << std::endl;
+}
+
+// Function returning an L-Value instead of a R-Value
+std::string& getValue(){
+    
+    return staticString;
+}
+
+// Not allowed - you cannot return an L-Value reference for a R-value value.
+// This is because once getValue ends, the temporary constant dies with it, and reference to such an item is meaningless.
+std::string& getValue(){
+    
+    return std::string{"some string"};
+}
+
+
+int main()
+{
+    display("Hello");
+    
+    std::string foo = "Hello New";
+    display(foo);
+    
+    std::string myVal = getValue();
+    
+    std::cout << &foo << std::endl;
+    
+    display(getValue());
+    
+    displayUniversal("Hello");
+    displayUniversal(foo);
+}
+
+
+
+
+
+
+#include <iostream>
+using namespace std;
+
+string srcstring(string a)
+{
+    //cout<<"fucntion string: "<<a<<endl;
+    cout<< &a<< endl;
+    return a;
+}
+
+int main(){
+
+   string a = "5";
+   string& val = a; 
+   cout<< "val = "<< &val <<" a = "<< &a<<endl; // same address for val and 'a'.
+   
+    string&& b = srcstring("hello");
+    cout<<"b = "<< b << endl;
+    
+    cout<< "b ka add:"<< &b << endl;
+}

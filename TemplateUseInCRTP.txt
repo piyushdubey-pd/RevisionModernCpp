@@ -1,0 +1,44 @@
+#include <iostream>
+using namespace std;
+
+template <class Derived>                    // Base is a template class, can be called or created with any of the derived classes. THIS IS CRTP. Calling deried class functions in base class with the help of templates
+class Base{
+   public:
+   void name()
+   {
+       auto* derived = static_cast<Derived*>(this);
+       derived->impl();
+   }
+    void impl()
+   {
+       cout<<"Base class ka impl chala"<<endl;
+   }
+};
+
+class D1: public Base<D1>
+{
+   public:
+   void impl()
+   {
+       cout<<"D1 class ka impl chala"<<endl;
+   }
+};
+
+class D2: public Base<D2>
+{
+   public:
+   void impl()
+   {
+       cout<<"D2 class ka impl chala"<<endl;
+   }
+};
+
+
+int main()
+{
+    Base<D2> obj;       // I created a base class obj, of the TYPE DERIVED CLASS (D2).
+    obj.name();
+}
+
+
+

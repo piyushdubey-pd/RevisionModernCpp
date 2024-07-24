@@ -1,0 +1,79 @@
+// Learn about different type of casts first, then templates. This will make you understand this code.
+
+
+Static Cast in CRTP:
+
+The line auto* derived = static_cast<Derived*>(this); in the name() function is a core part of the CRTP. It casts the base class pointer (this) to a derived class pointer.
+This allows calling derived class methods from the base class template.
+
+
+
+#include <iostream>
+template <class Derived>
+struct Base { 
+    void name() {
+        std::string s = typeid(this).name();
+        std::cout << "Type of this pointer: " << s << std::endl;
+        
+        auto* derived = static_cast<Derived*>(this);
+        std::cout << "Type of this pointer after static_cast: " << typeid(derived).name() << std::endl;
+        derived->impl();
+    } 
+    
+    virtual void display() {
+        std::cout << "Base" << std::endl;
+    }
+    
+};
+
+struct D1 : public Base<D1> {
+    void impl() {
+        std::puts("D1::impl()"); 
+    } 
+    
+    void name() {
+        throw std::runtime_error ("Cannot call deriver class name(). Call base class name().");
+    }
+    
+    void display() {
+        std::cout << "D1" << std::endl;
+    }
+    
+};
+struct D2 : public Base<D2> { 
+    void impl() { 
+        std::puts("D2::impl()"); 
+    }
+    void name() {
+        throw std::runtime_error ("Cannot call deriver class name(). Call base class name().");
+    }
+    
+    void display() {
+        std::cout << "D2" << std::endl;
+    }
+};
+
+template <class Derived>
+void display(Base<Derived>* b) {
+    b->display();
+}
+ 
+int main()
+{
+    // Base<D1> b1; b1.name(); //undefined behavior
+    // Base<D2> b2; b2.name(); //undefined behavior
+    //D1 d1; d1.name();
+    //D2 d2; d2.name();
+    
+    Base<D1>* b1 = new D1;
+    Base<D2>* b2 = new D2;
+    D1* d1 = new D1;
+    D2* d2 = new D2;
+    
+    //b1->name();
+    //b2->name();
+    
+    display(d1);
+    
+    return 0;
+}

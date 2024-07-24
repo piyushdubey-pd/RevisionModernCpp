@@ -1,0 +1,47 @@
+// All the members of car class will be private to sportsCar class(access specifier is private), but the private members of 'car' class cannot be accessed by sportsCar class also(gear variable)
+
+// We use public inheritance where ever we find "is-a" relationship. 'sportsCar is a car'. so ideally we should have used public access specifier here.
+// because sprotsCar is a car and hence all the facilities of a car should be available to sportsCar as well, hence publicaly inherting is important.
+
+// Private and protected are used, For e.g: if we have class of Array(Base) and child class as stack, then we want to use array to fill in stack values, but it should be done acc. to stack order (Meaning nly stack should call the setValue fuction in class Array, which should send a index 1 by 1), we directly cannot called setValue in stack. If we do, then for stack we will be able to setValue like setValue(4(position), 87(value)). In stack we need to first place value in 0th index and not in 4th index, hence we should restrict user to call setValue function of Array class.
+
+#include <iostream>
+using namespace std;
+
+class car
+{
+  int gear;
+  
+  public:
+   void setGear(int set)
+   { 
+       if(set > 2)
+       gear+=set;
+       
+       cout<<"Gear of car ran "<<gear<<endl;
+   }
+};
+
+class sportsCar: private car
+{
+
+ public:
+ void setgr(int y)
+ {
+     setGear(y);
+ }
+};
+
+int main()
+{
+    sportsCar f1;
+    f1.setgr(6);
+}
+
+
+
+output
+Gear of car ran 6
+
+
+=== Code Execution Successful ===

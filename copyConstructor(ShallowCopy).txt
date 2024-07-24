@@ -1,0 +1,51 @@
+#include <iostream>
+using namespace std;
+
+class Dummy{
+  int a, b;
+  int *p;
+  public:
+
+  Dummy()
+  { //need to assign this dynamically bcoz if in setData I do p=&z then
+  // address of z after setData is executed is no more valid. Hence create memory
+  //dynamically
+      p = new int;
+  }
+   ~Dummy()
+  {
+      delete p; // if its shallow copy then d1 is deleted, then p of that is also deleted but d2 is still pinting at p which is not deleted, and we dont  want that, hence whenever we have pointer in the class, use deep copy
+  }
+
+  void setData(int x, int y, int z){
+      a = x;
+      b = y;
+      *p = z;
+  } 
+  void getData()
+  {
+     cout << "a:"<<a<< " b:"<<b<<" p:"<<*p<< endl;
+  }
+
+// a default copy constructor would be like this
+Dummy (Dummy &d) // shallow copy
+{
+  a=d.a;
+  b=d.b;
+  p= d.p; // now as address being copied to d2 as it was in d1. Both d1 and d2 pointing at same memory location and if one changed the other also changed
+}
+
+};
+
+
+int main()
+{
+    Dummy d1;
+    d1.setData(5,6,7);
+    // when we create an object and initialize it with the 
+    //same class of object, a copy constructor is called and 
+    // contents are copied from d1 to d2
+    Dummy d2 = d1; //SHALLOW COPY
+    d2.getData();
+    
+}

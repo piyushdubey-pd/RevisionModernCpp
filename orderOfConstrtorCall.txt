@@ -1,0 +1,81 @@
+// when B obj created, B constructor is called, which first calls its parent class constructor, then calls its construtor.
+// so calling is done from child to parent but execution is done from parent to child.
+// B(): A() ---> B has this syntax internally if we dont write
+{}
+
+// If we wish to pass an argument in A for e.g, then we need to define A constructor also within the child class, because if we dont, then compiler replaces it with default consturtors with no parameters in it, hence it will give error
+
+#include <iostream>
+using namespace std;
+
+class A{
+public:
+    A()
+    {
+        cout<< "Class A ran"<< endl;
+    }
+};
+
+class B: public A{
+public:
+    B(){
+        cout<< "Class B ran"<<endl;
+    }
+    
+};
+
+int main()
+{
+    B obj1;
+}
+
+
+output:
+Class A ran
+Class B ran
+
+
+=== Code Execution Successful ===
+
+
+
+//parameter passing
+
+#include <iostream>
+using namespace std;
+
+class A{
+    int a;
+public:
+    A(int x)
+    {
+        cout<< "Class A ran"<< endl;
+        a = x;
+        cout<< a << endl;
+    }
+};
+
+class B: public A{
+    int b;
+public:
+    B(int x,int y): A(x)
+    {
+        cout<< "Class B ran"<<endl;
+        b = y;
+        cout<< b<< endl;
+    }
+};
+
+int main()
+{
+    B obj1(2, 3);
+}
+
+output: 
+Class A ran
+2
+Class B ran
+3
+
+
+=== Code Execution Successful ===

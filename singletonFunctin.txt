@@ -1,0 +1,40 @@
+//To have only 1 instance of the class, we can use singleton function
+
+#include <iostream>
+using namespace std;
+
+class President{
+  President(){};                     // declare all the constructor, copy constructor and copy assignment operator to be private and no instance 
+                                      // or copies of President can be created because President can only be 1                       
+  President(const President&);
+  President& operator= (const President&);
+  
+  string name;
+  
+  public:
+  static President& getInstance()
+  {
+      static President onlyPM;
+      return onlyPM;
+  }
+  
+  string getName()
+  { return name;}
+  
+  void setName(string PMName)
+  {
+      name = PMName;
+  }
+  void displayName()
+  {
+      cout<<name<<endl;
+  }
+};
+
+int main()
+{
+    President& onlyPM = President::getInstance();
+    onlyPM.setName("Apeksha");
+    onlyPM.displayName();
+    President second = onlyPM; // error
+}
